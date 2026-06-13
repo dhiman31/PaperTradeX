@@ -67,9 +67,30 @@ const deleteAccount = async (req,res) => {
     }
 }
 
-const verifyEmail = async (req,res) => {
+const initiateVerification = async (req,res) => {
     try {
-        const response = await userServ.verifyEmail(req.body);
+        const response = await userServ.initiateVerification(req.body);
+        return res.status(201).json({
+            data : response ,
+            success : true,
+            message : 'Successfully initiated user email',
+            err : {}
+        })
+
+    } catch (error) {
+        console.log("Issue in controller");
+        return res.status(500).json({
+            data:{},
+            success:false,
+            message : error.message,
+            err : error
+        })
+    }
+}
+
+const verifyEmailViaOTP = async (req,res) => {
+    try {
+        const response = await userServ.verifyEmailViaOTP(req.body);
         return res.status(201).json({
             data : response ,
             success : true,
@@ -92,5 +113,6 @@ module.exports = {
     register,
     login,
     deleteAccount,
-    verifyEmail
+    initiateVerification,
+    verifyEmailViaOTP
 }

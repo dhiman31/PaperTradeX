@@ -3,7 +3,7 @@ dotenv.config();
 
 module.exports = {
     PORT : process.env.PORT,
-    JWT_KEY : process.env.JWT_KEY,
-    JWT_EXP : process.env.JWT_EXP,
+    EMAIL_ID : process.env.EMAIL_ID,
+    EMAIL_PASS : process.env.EMAIL_PASS,
     KAFKA_BROKER_IP : process.env.KAFKA_BROKER_IP
 }

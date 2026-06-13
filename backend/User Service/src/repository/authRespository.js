@@ -61,6 +61,8 @@ class authRepository{
                     }
                 }
             );
+
+            return true;
         } catch (error) {
             console.log("Cannot update verification status");
             throw error;

@@ -30,14 +30,14 @@ const isAuthenticated = async (req, res, next) => {
         const token = req.headers['x-access-token'];
         const response = await authServ.isAuthenticated(token);
 
-        console.log(response);
-
-        req.body = {
-            id : response.id,
-            email : response.email,
-            isVerified : response.isVerified
+        if (!req.body) {
+            req.body = {};
         }
 
+        req.body.id = response.id
+        req.body.email = response.email
+        req.body.isVerified = response.isVerified
+        
         next();
     } catch (error) {
         return res.status(401).json({

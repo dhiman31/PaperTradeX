@@ -6,6 +6,7 @@ const authMiddleware = require('../../middlewares/authMiddleware')
 router.post('/user/register', authController.register)
 router.post('/user/login' , authController.login)
 router.delete('/user' , authMiddleware.isAuthenticated , authController.deleteAccount)
-router.post('/user/verifyemail' , authMiddleware.isAuthenticated , authController.verifyEmail)
+router.post('/user/initiateVerification' , authMiddleware.isAuthenticated , authController.initiateVerification)
+router.post('/user/verifyViaOTP' , authMiddleware.isAuthenticated , authController.verifyEmailViaOTP)
 
 module.exports = router;

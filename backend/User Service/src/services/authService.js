@@ -2,6 +2,9 @@ const authRepository = require('../repository/authRespository');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_KEY, JWT_EXP } = require('../config/serverConfig');
+const generateOTP = require("../utils/otpGenerator");
+const redisClient = require("../config/redisClient");
+const { producer } = require("../utils/kafkaProducer");
 
 class authService {
 
@@ -107,12 +110,96 @@ class authService {
         }
     }
 
-    async verifyEmail(data) {
+    async storeOTPRedis(data){
         try {
-            await this.authRepo.updateVerificationStatus(data);
+            await redisClient.set(
+                `otp:${data.id}`,
+                data.otp,
+                {
+                EX: 300,
+                }
+            );
+        } catch (error) {
+            console.log("Error in storing OTP to REDIS")
+            throw error
+        }
+    }
+
+    async sendToKafka(data){
+        try {
+            await producer.send({
+                topic: "notification-events",
+                messages: [
+                {
+                    value: JSON.stringify({
+                    type: "EMAIL_VERIFICATION",
+                    email: data.email,
+                    otp: data.otp
+                    }),
+                },
+                ],
+            });
+
+        } catch (error) {
+            console.log("Could not send to Kafka")
+            throw error;
+        }
+    }
+
+    async initiateVerification(data) {
+        try {
+
+            const user = await this.authRepo.findUserByEmail({
+                email : data.email
+            })
+            if(user.isVerified){
+                throw new Error("Already Verified!!")
+            }
+            const otp = generateOTP();
+            await this.storeOTPRedis({
+                id: data.id,
+                otp : otp
+            })
+            await this.sendToKafka({
+                email : data.email,
+                otp : otp
+            })
             return true;
         } catch (error) {
             throw error;
+        }
+    }
+
+    async verifyEmailViaOTP(data){
+        try {
+            const storedOTP = await redisClient.get(
+                `otp:${data.id}`
+            );
+            
+            // OTP Expired
+            if (!storedOTP) {
+                throw new Error("OTP Expired");
+            }
+
+            // wrong OTP
+            if (storedOTP !== data.otp) {
+                throw new Error("Invalid OTP");
+            }
+
+            // update verification status
+            const response = await this.authRepo.updateVerificationStatus({
+                id : data.id,
+                email : data.email
+            })
+
+            // delete the OTP
+            await redisClient.del(`otp:${data.id}`);
+                return {
+                message: "Email Verified Successfully",
+            };
+        } catch (error) {
+            console.log("Error in veryfing the OTP")
+            throw error
         }
     }
 }
