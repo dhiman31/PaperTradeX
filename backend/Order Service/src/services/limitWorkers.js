@@ -1,5 +1,6 @@
 const OrderRepository = require("../repository/orderRepository");
 const callPortfolio = require("./callPortfolio");
+const { publishOrderEvent } = require("./kafkaProducer");
 
 const orderRepo = new OrderRepository();
 
@@ -17,6 +18,13 @@ const executeLimitOrder = async (orderId) => {
             order.price
         );
         await orderRepo.updateOrderStatus(orderId, 'COMPLETED');
+
+        await publishOrderEvent('LIMIT_ORDER_COMPLETED',{
+            orderId: order.id,
+            userId: order.userId,
+            symbol: order.symbol
+        });
+
     } catch (err) {
         await orderRepo.updateOrderStatus(orderId, 'FAILED');
         throw new Error(err.response?.data?.error || err.message);

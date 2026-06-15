@@ -12,7 +12,7 @@ class OrderRepository {
                 amount,
                 price,
                 total_amount: amount * price,
-                status: orderType === 'MARKET' ? 'COMPLETED' : 'PENDING'
+                status: 'PENDING'
                 // Market orders complete immediately, limit orders start as pending
             });
         } catch (err) {

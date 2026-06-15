@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { INTERNAL_SECRET } = require('../config/serverConfig');
 
 const verifyJwt = (req, res, next) => {
     const token = req.headers['x-access-token'];
@@ -14,7 +15,7 @@ const verifyJwt = (req, res, next) => {
 };
 
 const internalOnly = (req, res, next) => {
-    if (req.headers['x-internal-secret'] !== process.env.INTERNAL_SECRET) {
+    if (req.headers['x-internal-secret'] !== INTERNAL_SECRET) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
     next();
