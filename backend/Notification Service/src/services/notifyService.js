@@ -20,23 +20,23 @@ class notifyService{
 
     createNotification = async (data) => {
         try {
-        const {type, otp, userEmail} = data;
-            
-        if (!type || !otp || !userEmail) {
-        throw new Error('Invalid notification payload');
-        }
+            const {type, content, userEmail} = data;
+                
+            if (!type || !content || !userEmail) {
+            throw new Error('Invalid notification payload');
+            }
 
-        const payload = {
-            content : otp,
-            type,
-            userEmail,
-            status : "PENDING"
-        }
-        const notification = await this.notifyRepo.createNotification(payload);
-        return notification;
+            const payload = {
+                content,
+                type,
+                userEmail,
+                status : "PENDING"
+            }
+            const notification = await this.notifyRepo.createNotification(payload);
+            return notification;
 
         } catch (error) {
-        throw error;
+            throw error;
         }
     }
 

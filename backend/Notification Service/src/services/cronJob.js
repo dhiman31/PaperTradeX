@@ -16,8 +16,14 @@ const setUpJobs = () => {
         console.log(notifications);
         
         for (const element of notifications) {
-            
-            await emailServ.sendEmailVerification(element.dataValues.userEmail , element.dataValues.content)
+
+            const { userEmail, content, type } = element.dataValues;
+
+            if(type === 'EMAIL_VERIFICATION') {
+                await emailServ.sendEmailVerification(userEmail, content);
+            } else {
+                await emailServ.sendOrderNotification(userEmail, content);
+            }
             await Notification.update(
                 { status: 'SENT' },
                 { where: { id: element.dataValues.id } }
