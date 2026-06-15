@@ -5,6 +5,7 @@ const { JWT_KEY, JWT_EXP } = require('../config/serverConfig');
 const generateOTP = require("../utils/otpGenerator");
 const redisClient = require("../config/redisClient");
 const { producer } = require("../utils/kafkaProducer");
+const createPortfolio = require('./createPortfolio')
 
 class authService {
 
@@ -57,6 +58,12 @@ class authService {
                     expiresIn: JWT_EXP
                 }
             );
+
+            try {
+                await createPortfolio(data.id);
+            } catch (err) {
+                console.log("Failed to create portfolio, will retry later:", err.message);
+            }
 
             return token;
 
