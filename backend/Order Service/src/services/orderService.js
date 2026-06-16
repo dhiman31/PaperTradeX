@@ -6,7 +6,7 @@ const { removeLimitOrder, pushLimitOrder } = require('./redisProducer');
 
 const orderRepo = new OrderRepository();
 
-const placeMarketOrder = async (userId, transactionType, symbol, amount) => {
+const placeMarketOrder = async (userId , email , transactionType, symbol, amount) => {
 
     // 1. Get current price from Price Service
     const price = await fetchCurrentPrice(symbol);
@@ -26,7 +26,10 @@ const placeMarketOrder = async (userId, transactionType, symbol, amount) => {
         await publishOrderEvent('ORDER_FAILED',{
                 orderId: order.id,
                 userId,
-                symbol
+                symbol,
+                userEmail: email,
+                amount,
+                price
         });
         throw new Error(err.response?.data?.error || err.message);
     }
@@ -35,6 +38,7 @@ const placeMarketOrder = async (userId, transactionType, symbol, amount) => {
             orderId: order.id,
             userId,
             symbol,
+            userEmail: email,
             amount,
             price
     });
@@ -42,7 +46,7 @@ const placeMarketOrder = async (userId, transactionType, symbol, amount) => {
     return await orderRepo.getOrderById(order.id);
 };
 
-const placeLimitOrder = async (userId, transactionType, symbol, amount, limitPrice) => {
+const placeLimitOrder = async (userId,email, transactionType, symbol, amount, limitPrice) => {
     // Just save it as PENDING — Limit Order Worker will execute it when price is hit
     const order = await orderRepo.createOrder(
         userId, 'LIMIT', transactionType, symbol, amount, limitPrice
@@ -53,13 +57,14 @@ const placeLimitOrder = async (userId, transactionType, symbol, amount, limitPri
         orderId: order.id,
         userId,
         symbol,
+        userEmail: email,
         amount,
         limitPrice
     });
     return order;
 };
 
-const cancelOrder = async (orderId,userId) => {
+const cancelOrder = async (orderId,userId,email) => {
 
     const order = await orderRepo.getOrderById(orderId);
     if(!order){
@@ -95,6 +100,7 @@ const cancelOrder = async (orderId,userId) => {
     await publishOrderEvent('LIMIT_ORDER_CANCELLED',{
             orderId,
             userId,
+            userEmail: email,
             symbol: order.symbol
         }
     );

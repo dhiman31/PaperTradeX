@@ -7,7 +7,7 @@ class OrderController {
         try {
             const { transactionType, symbol, amount } = req.body;
             const order = await orderService.placeMarketOrder(
-                req.user.id, transactionType, symbol.toUpperCase(), Number(amount)
+                req.user.id, req.user.email , transactionType, symbol.toUpperCase(), Number(amount)
             );
             res.status(201).json(order);
         } catch (err) {
@@ -19,7 +19,7 @@ class OrderController {
         try {
             const { transactionType, symbol, amount, limitPrice } = req.body;
             const order = await orderService.placeLimitOrder(
-                req.user.id, transactionType, symbol.toUpperCase(), Number(amount), Number(limitPrice)
+                req.user.id, req.user.email , transactionType, symbol.toUpperCase(), Number(amount), Number(limitPrice)
             );
             res.status(201).json(order);
         } catch (err) {
@@ -38,7 +38,7 @@ class OrderController {
 
     async cancelOrder(req, res) {
         try {
-            const order = await orderService.cancelOrder(req.params.orderId, req.user.id);
+            const order = await orderService.cancelOrder(req.params.orderId, req.user.id , req.user.email);
             res.json(order);
         } catch (err) {
             res.status(400).json({ error: err.message });

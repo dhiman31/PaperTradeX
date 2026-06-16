@@ -1,4 +1,4 @@
-const Order = require('../models/order');
+const {Order} = require('../models/index');
 
 class OrderRepository {
 
@@ -11,7 +11,7 @@ class OrderRepository {
                 symbol,
                 amount,
                 price,
-                total_amount: amount * price,
+                totalAmount: amount * price,
                 status: 'PENDING'
                 // Market orders complete immediately, limit orders start as pending
             });

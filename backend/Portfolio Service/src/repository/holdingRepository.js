@@ -1,4 +1,4 @@
-const Holding = require('../models/holding');
+const {Holding} = require('../models/index');
 
 class HoldingRepository{
     async createHolding(userId,symbol,quantity,price,transaction){

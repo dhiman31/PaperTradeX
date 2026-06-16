@@ -58,15 +58,7 @@ class authService {
                     expiresIn: JWT_EXP
                 }
             );
-
-            try {
-                await createPortfolio(data.id);
-            } catch (err) {
-                console.log("Failed to create portfolio, will retry later:", err.message);
-            }
-
             return token;
-
         } catch (error) {
             console.log("Error while login in auth service");
             throw error;
@@ -182,6 +174,9 @@ class authService {
             const storedOTP = await redisClient.get(
                 `otp:${data.id}`
             );
+
+            console.log("OTP FROM CLIENT : ",data.otp)
+            console.log("STORED IN REDIS : ",storedOTP)
             
             // OTP Expired
             if (!storedOTP) {
@@ -189,7 +184,7 @@ class authService {
             }
 
             // wrong OTP
-            if (storedOTP !== data.otp) {
+            if (storedOTP !== String(data.otp)) {
                 throw new Error("Invalid OTP");
             }
 
@@ -198,6 +193,12 @@ class authService {
                 id : data.id,
                 email : data.email
             })
+
+            try {
+                await createPortfolio(data.id);
+            } catch (err) {
+                console.log("Failed to create portfolio, will retry later:", err.message);
+            }
 
             // delete the OTP
             await redisClient.del(`otp:${data.id}`);

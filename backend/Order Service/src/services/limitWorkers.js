@@ -22,7 +22,10 @@ const executeLimitOrder = async (orderId) => {
         await publishOrderEvent('LIMIT_ORDER_COMPLETED',{
             orderId: order.id,
             userId: order.userId,
-            symbol: order.symbol
+            symbol: order.symbol,
+            userEmail : email,
+            amount : order.amount,
+            price : order.price
         });
 
     } catch (err) {

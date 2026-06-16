@@ -44,7 +44,7 @@ class PortfolioController {
         }
     }
 
-    // Called internally by User Service after registration
+    // Called internally by User Service after verification
     async createPortfolio(req, res) {
         try {
             const { userId } = req.body;

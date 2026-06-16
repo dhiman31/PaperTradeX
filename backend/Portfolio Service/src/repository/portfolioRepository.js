@@ -1,4 +1,4 @@
-const Portfolio = require('../models/portfolio');
+const {Portfolio} = require('../models/index');
 
 class PortfolioRepository{
 

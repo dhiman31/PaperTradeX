@@ -3,6 +3,8 @@ const {addMarketClient} = require('../subscriptionManager');
 
 async function handleMarket(ws) {
 
+    console.log('MARKET CLIENT CONNECTED');
+    
     addMarketClient(ws);
     const prices = await cacheClient.hGetAll('LATEST_PRICES');
 
