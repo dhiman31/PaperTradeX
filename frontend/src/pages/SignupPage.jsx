@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/auth.css';
+import logo from '../asset/logo.png';
 
 export default function SignupPage() {
   const { register } = useAuth();
@@ -52,9 +53,10 @@ export default function SignupPage() {
         <div className="auth-left">
           <div className="auth-logo">
             <div className="auth-logo__mark">
-              <svg viewBox="0 0 20 20" fill="#0b0e11" width="18" height="18">
-                <polygon points="10,2 12.5,7.5 18,8.5 14,12.5 15,18 10,15.5 5,18 6,12.5 2,8.5 7.5,7.5" />
-              </svg>
+              <img
+                src={logo}
+                alt="PaperTradeX"
+              />
             </div>
             <span className="auth-logo__name">PaperTradeX</span>
           </div>

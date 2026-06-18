@@ -11,12 +11,14 @@ const { JWT_KEY } = require('./config/serverConfig');
 
 const {
   PORT,
-  USER_PORT,
-  PORTFOLIO_PORT,
-  PRICE_PORT,
-  WATCHLIST_PORT,
-  ORDER_PORT
+  USER_URL,
+  PORTFOLIO_URL,
+  PRICE_URL,
+  WATCHLIST_URL,
+  ORDER_URL
 } = require('./config/serverConfig');
+
+console.log(USER_URL)
 
 const app = express();
 const server = createServer(app);
@@ -56,7 +58,7 @@ const isAuthenticated = (req, res, next) => {
 app.use(
   '/prices',
   createProxyMiddleware({
-    target: `http://localhost:${PRICE_PORT}`,
+    target: PRICE_URL,
     changeOrigin: true,
     pathRewrite: {
       '^/': '/api/v1/prices/'
@@ -74,7 +76,7 @@ app.use(
 app.use(
   '/user',
   createProxyMiddleware({
-    target: `http://localhost:${USER_PORT}`,
+    target: USER_URL,
     changeOrigin: true,
     pathRewrite: {
       '^/': '/api/v1/user/'
@@ -87,7 +89,7 @@ app.delete(
   '/user',
   isAuthenticated,
   createProxyMiddleware({
-    target: `http://localhost:${USER_PORT}`,
+    target: USER_URL,
     changeOrigin: true,
     pathRewrite: {
       '^/': '/api/v1/user/'
@@ -104,7 +106,7 @@ app.use(
   '/watchlist',
   isAuthenticated,
   createProxyMiddleware({
-    target: `http://localhost:${WATCHLIST_PORT}`,
+    target: WATCHLIST_URL,
     changeOrigin: true,
     pathRewrite: {
       '^/': '/api/v1/watchlist/'
@@ -124,7 +126,7 @@ app.use(
   '/portfolio',
   isAuthenticated,
   createProxyMiddleware({
-    target: `http://localhost:${PORTFOLIO_PORT}`,
+    target: PORTFOLIO_URL,
     changeOrigin: true,
 
     pathRewrite: (path) => {
@@ -148,7 +150,7 @@ app.use(
   '/orders',
   isAuthenticated,
   createProxyMiddleware({
-    target: `http://localhost:${ORDER_PORT}`,
+    target: ORDER_URL,
     changeOrigin: true,
     pathRewrite: {
       '^/': '/api/v1/orders/'
@@ -179,7 +181,7 @@ function proxyWS(clientSocket, upstreamPath) {
   console.log('Creating upstream:', upstreamPath);
 
   const upstream = new WebSocket(
-    `ws://localhost:${PRICE_PORT}${upstreamPath}`
+    `ws://${PRICE_URL}${upstreamPath}`
   );
 
   // ----------------------------

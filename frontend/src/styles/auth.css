@@ -132,40 +132,37 @@
 }
 
 .auth-logo{
-
   display:flex;
-
   align-items:center;
-
   gap:14px;
-
-  margin-bottom:56px;
 }
 
 .auth-logo__mark{
-
-  width:44px;
-
-  height:44px;
-
-  border-radius:14px;
-
-  background:var(--yellow);
+  width:56px;
+  height:56px;
 
   display:flex;
-
+  align-items:center;
   justify-content:center;
 
-  align-items:center;
+  overflow:hidden;
+  border-radius:14px;
+
+  background:transparent;
+}
+
+.auth-logo__mark img{
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
+  display:block;
 }
 
 .auth-logo__name{
-
-  font-size:28px;
-
-  font-weight:800;
-
-  color:var(--yellow);
+  font-size:22px;
+  font-weight:700;
+  color:#f0b90b;
 }
 
 .auth-left__body{
