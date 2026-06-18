@@ -1,0 +1,155 @@
+/* ─── navbar.css ─────────────────────────────────────────────
+   Top navigation bar. Shares the dark token system established
+   in market.css (#0b0e11 bg, #161a1e surface, #f0b90b gold,
+   #0ecb81 green, #eaecef text).
+──────────────────────────────────────────────────────────── */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 56px;
+  padding: 0 24px;
+  background: #0b0e11;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Brand ── */
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.navbar__brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f0b90b;
+  flex-shrink: 0;
+}
+
+.navbar__brand-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: #eaecef;
+  letter-spacing: 0.2px;
+}
+
+/* ── Nav links ── */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.navbar__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(234, 236, 239, 0.55);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.navbar__link:hover {
+  color: #eaecef;
+}
+.navbar__link--active {
+  color: #eaecef;
+}
+.navbar__link--active::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 0;
+  height: 2px;
+  background: #f0b90b;
+  border-radius: 2px 2px 0 0;
+}
+
+/* ── Actions (login/signup/logout) ── */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.navbar__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.navbar__btn--text {
+  background: transparent;
+  color: rgba(234, 236, 239, 0.7);
+}
+.navbar__btn--text:hover {
+  color: #eaecef;
+}
+
+.navbar__btn--solid {
+  background: #f0b90b;
+  color: #1e2329;
+}
+.navbar__btn--solid:hover {
+  background: #f8d12f;
+}
+
+.navbar__btn--ghost {
+  background: rgba(255, 255, 255, 0.04);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  color: #eaecef;
+}
+.navbar__btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.navbar__btn--ghost:focus-visible,
+.navbar__btn--text:focus-visible,
+.navbar__btn--solid:focus-visible,
+.navbar__link:focus-visible {
+  outline: 1.5px solid #f0b90b;
+  outline-offset: 2px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .navbar {
+    gap: 12px;
+    padding: 0 14px;
+  }
+  .navbar__brand-text {
+    display: none;
+  }
+  .navbar__links {
+    gap: 0;
+  }
+  .navbar__link {
+    padding: 0 10px;
+    font-size: 12px;
+  }
+  .navbar__btn {
+    padding: 0 12px;
+    font-size: 12px;
+  }
+}

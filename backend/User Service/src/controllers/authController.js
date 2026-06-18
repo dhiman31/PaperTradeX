@@ -92,7 +92,7 @@ const verifyEmailViaOTP = async (req,res) => {
     try {
         const response = await userServ.verifyEmailViaOTP(req.body);
         return res.status(201).json({
-            data : response ,
+            data : response,
             success : true,
             message : 'Successfully verified user email',
             err : {}

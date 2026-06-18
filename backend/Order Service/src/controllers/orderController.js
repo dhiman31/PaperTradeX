@@ -5,6 +5,9 @@ class OrderController {
     
     async placeMarketOrder(req, res) {
         try {
+            if(!req.user.isVerified){
+                throw new Error("Please verify account first");
+            }
             const { transactionType, symbol, amount } = req.body;
             const order = await orderService.placeMarketOrder(
                 req.user.id, req.user.email , transactionType, symbol.toUpperCase(), Number(amount)
@@ -17,6 +20,9 @@ class OrderController {
 
     async placeLimitOrder(req, res) {
         try {
+            if(!req.user.isVerified){
+                throw new Error("Please verify account first");
+            }
             const { transactionType, symbol, amount, limitPrice } = req.body;
             const order = await orderService.placeLimitOrder(
                 req.user.id, req.user.email , transactionType, symbol.toUpperCase(), Number(amount), Number(limitPrice)
@@ -29,6 +35,9 @@ class OrderController {
 
     async getUserOrders(req, res) {
         try {
+            if(!req.user.isVerified){
+                throw new Error("Please verify account first");
+            }
             const orders = await orderService.getUserOrders(req.user.id);
             res.json(orders);
         } catch (err) {
@@ -38,6 +47,9 @@ class OrderController {
 
     async cancelOrder(req, res) {
         try {
+            if(!req.user.isVerified){
+                throw new Error("Please verify account first");
+            }
             const order = await orderService.cancelOrder(req.params.orderId, req.user.id , req.user.email);
             res.json(order);
         } catch (err) {

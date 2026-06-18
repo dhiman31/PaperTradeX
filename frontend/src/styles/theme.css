@@ -1,0 +1,579 @@
+/* ============================================================
+   LEDGER THEME — dark trading-terminal aesthetic
+   Import this once in pages that need it:
+   import '../styles/theme.css';
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #0c0f14;
+  --surface: #12161d;
+  --surface-raised: #181d26;
+  --border: #232a35;
+  --border-soft: #1a202a;
+
+  --text-primary: #e8edf4;
+  --text-secondary: #8d97a6;
+  --text-tertiary: #565f6c;
+
+  --accent: #e3a23c;
+  --accent-soft: rgba(227, 162, 60, 0.14);
+  --accent-strong: #f0b65a;
+
+  --positive: #36d399;
+  --positive-soft: rgba(54, 211, 153, 0.12);
+  --negative: #f25c5c;
+  --negative-soft: rgba(242, 92, 92, 0.12);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+/* ---------- generic page / panel scaffolding ---------- */
+
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.6rem;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.heading-1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.heading-2 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+.sub {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin: 0 0 1.75rem;
+  line-height: 1.5;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.panel__header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* ---------- live status dot ---------- */
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.live-dot--on {
+  background: var(--positive);
+  box-shadow: 0 0 0 0 var(--positive-soft);
+  animation: pulse 1.8s infinite;
+}
+.live-dot--off {
+  background: var(--negative);
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(54, 211, 153, 0.45); }
+  70%  { box-shadow: 0 0 0 6px rgba(54, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(54, 211, 153, 0); }
+}
+
+/* ---------- tables ---------- */
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  padding: 0 0.75rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.table td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--border-soft);
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.table td:first-child,
+.table th:first-child {
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover td {
+  background: var(--surface-raised);
+}
+
+.change--pos { color: var(--positive); }
+.change--neg { color: var(--negative); }
+
+.empty-state {
+  color: var(--text-tertiary);
+  font-size: 0.88rem;
+  padding: 1rem 0;
+  text-align: center;
+  font-family: var(--font-mono);
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.88rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  padding: 0.65rem 1.1rem;
+  cursor: pointer;
+  transition: filter 0.15s ease, opacity 0.15s ease;
+}
+.btn:disabled { cursor: not-allowed; opacity: 0.55; }
+
+.btn--primary {
+  background: var(--accent);
+  color: #20150a;
+}
+.btn--primary:hover:not(:disabled) { filter: brightness(1.08); }
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+.btn--ghost:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+
+.btn--block { width: 100%; }
+
+/* ---------- forms ---------- */
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.field label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.field input {
+  width: 100%;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.8rem;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.field input:focus {
+  border-color: var(--accent);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 480px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+.inline-form {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* ---------- alerts ---------- */
+
+.alert {
+  font-size: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-sm);
+  margin-top: 0.9rem;
+}
+.alert--error {
+  background: var(--negative-soft);
+  color: var(--negative);
+}
+.alert--success {
+  background: var(--positive-soft);
+  color: var(--positive);
+}
+.alert--info {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+/* ---------- stat grid (portfolio summary) ---------- */
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.stat-card {
+  background: var(--surface);
+  padding: 1rem 1.1rem;
+}
+
+.stat-card__label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 0.4rem;
+}
+
+.stat-card__value {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+/* ---------- misc panel variants ---------- */
+
+.panel--accent {
+  border-color: var(--accent-soft);
+  background: linear-gradient(180deg, var(--accent-soft), var(--surface) 60%);
+}
+
+/* ---------- toolbar / controls ---------- */
+
+.toolbar {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+
+.toolbar__group {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.select-label {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.select {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.6rem;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  outline: none;
+}
+.select:focus { border-color: var(--accent); }
+
+/* segmented toggle (table/grid view) */
+
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.seg__btn {
+  background: transparent;
+  border: none;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+.seg__btn:disabled { cursor: default; }
+.seg__btn--active {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+/* ---------- top performers ---------- */
+
+.performers-row {
+  display: flex;
+  gap: 0.9rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.performer-card {
+  flex: 0 0 152px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.9rem;
+}
+
+.performer-card__rank {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  margin-bottom: 0.55rem;
+}
+
+.performer-card__symbol {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.performer-card__price {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ---------- pill badges ---------- */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+.pill--pos { background: var(--positive-soft); color: var(--positive); }
+.pill--neg { background: var(--negative-soft); color: var(--negative); }
+
+/* ---------- grid view (crypto cards) ---------- */
+
+.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 1rem;
+}
+
+.crypto-card {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.crypto-card__symbol { font-weight: 600; }
+.crypto-card__price { font-family: var(--font-mono); font-size: 1rem; }
+.crypto-card__vol {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+}
+
+/* ---------- pagination ---------- */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* ---------- segmented radio pills (order side / type) ---------- */
+
+.radio-group {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.radio-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--surface-raised);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.radio-pill input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-pill--active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.radio-pill--active.radio-pill--buy {
+  background: var(--positive-soft);
+  border-color: var(--positive);
+  color: var(--positive);
+}
+
+.radio-pill--active.radio-pill--sell {
+  background: var(--negative-soft);
+  border-color: var(--negative);
+  color: var(--negative);
+}
+
+/* ---------- live price badge ---------- */
+
+.live-badge {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  background: var(--surface-raised);
+  padding: 0.32rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin-left: 0.6rem;
+  white-space: nowrap;
+}
+
+/* ---------- buy / sell submit button variants ---------- */
+
+.btn--buy {
+  background: var(--positive);
+  color: #06241a;
+}
+.btn--buy:hover:not(:disabled) { filter: brightness(1.08); }
+
+.btn--sell {
+  background: var(--negative);
+  color: #2a0a0a;
+}
+.btn--sell:hover:not(:disabled) { filter: brightness(1.08); }
+
+/* ---------- pending status pill ---------- */
+
+.pill--pending {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+/* ---------- field helpers ---------- */
+
+.field-inline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.fields-stack > .field:last-child {
+  margin-bottom: 0;
+}

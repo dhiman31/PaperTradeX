@@ -194,6 +194,13 @@ class authService {
                 email : data.email
             })
 
+            const token = jwt.sign({
+                id: data.id,
+                email: data.email,
+                isVerified: true
+            },JWT_KEY,{expiresIn: '12h'}
+            );
+
             try {
                 await createPortfolio(data.id);
             } catch (err) {
@@ -202,9 +209,8 @@ class authService {
 
             // delete the OTP
             await redisClient.del(`otp:${data.id}`);
-                return {
-                message: "Email Verified Successfully",
-            };
+
+            return token;
         } catch (error) {
             console.log("Error in veryfing the OTP")
             throw error

@@ -4,15 +4,23 @@ class PortfolioController {
 
     async getPortfolio(req, res) {
         try {
+            if(!req.user.isVerified){
+                throw new Error("Please verify account first");
+            }
             const portfolio = await portfolioService.getPortfolio(req.user.id);
             res.json(portfolio);
         } catch (err) {
-            res.status(500).json({ error: err.message });
+            res.status(403).json({
+                error: err.message
+            });
         }
     }
 
     async getHolding(req, res) {
         try {
+            if(!req.user.isVerified){
+                throw new Error("Please verify account first");
+            }
             const holding = await portfolioService.getHolding(req.user.id, req.params.symbol.toUpperCase());
             if (!holding) return res.status(404).json({ error: 'Holding not found' });
             res.json(holding);

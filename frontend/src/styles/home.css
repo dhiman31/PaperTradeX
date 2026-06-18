@@ -1,0 +1,536 @@
+/* ─── home.css ───────────────────────────────────────────────
+   Styles for HomePage, PriceCard, PortfolioChart.
+   Uses CSS variables so it works in both light and dark mode.
+──────────────────────────────────────────────────────────── */
+
+/* ── Page root ───────────────────────────────────────────── */
+.hp-root {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ── Section ─────────────────────────────────────────────── */
+.hp-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hp-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hp-section-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hp-section-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: #eaecef;
+  margin: 0;
+}
+
+.hp-section-sub {
+  font-size: 13px;
+  color: rgba(234, 236, 239, 0.42);
+  margin: 0;
+}
+
+/* ── Live badge ──────────────────────────────────────────── */
+.hp-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+.hp-live-badge--on {
+  background: rgba(14, 203, 129, 0.1);
+  color: #0ecb81;
+  border: 0.5px solid rgba(14, 203, 129, 0.25);
+}
+
+.hp-live-badge--off {
+  background: rgba(240, 185, 11, 0.1);
+  color: #f0b90b;
+  border: 0.5px solid rgba(240, 185, 11, 0.2);
+}
+
+.hp-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: hp-pulse 1.5s ease-in-out infinite;
+}
+
+.hp-live-badge--off .hp-live-dot {
+  animation: none;
+  opacity: 0.6;
+}
+
+@keyframes hp-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.hp-empty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  color: rgba(234, 236, 239, 0.4);
+  font-size: 13px;
+}
+
+.hp-empty__spinner {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid rgba(240, 185, 11, 0.2);
+  border-top-color: #f0b90b;
+  border-radius: 50%;
+  animation: hp-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes hp-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Price cards grid ────────────────────────────────────── */
+.hp-price-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ── Individual price card ───────────────────────────────── */
+.hp-price-card {
+  background: #161a1e;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 18px 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.3s;
+}
+
+.hp-price-card--flash-up {
+  border-color: rgba(14, 203, 129, 0.4);
+}
+
+.hp-price-card--flash-down {
+  border-color: rgba(246, 70, 93, 0.4);
+}
+
+.hp-price-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hp-price-card__coin {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.hp-price-card__coin-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.hp-price-card__symbol {
+  font-size: 14px;
+  font-weight: 500;
+  color: #eaecef;
+}
+
+.hp-price-card__pair {
+  font-size: 11px;
+  color: rgba(234, 236, 239, 0.3);
+}
+
+.hp-price-card__change {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.hp-price-card__price {
+  font-size: 22px;
+  font-weight: 500;
+  color: #eaecef;
+  letter-spacing: -0.3px;
+  transition: color 0.3s;
+}
+
+.hp-price-card__spark {
+  width: 100%;
+  height: 40px;
+  margin: 4px 0;
+  display: block;
+}
+
+.hp-price-card__vol {
+  font-size: 11px;
+  color: rgba(234, 236, 239, 0.3);
+}
+
+.hp-price-card__vol span {
+  color: rgba(234, 236, 239, 0.5);
+}
+
+/* ── Shared color utils ──────────────────────────────────── */
+.hp-pos { color: #0ecb81; }
+.hp-neg { color: #f6465d; }
+
+/* ── Guest card ──────────────────────────────────────────── */
+.hp-guest-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  background: rgba(240, 185, 11, 0.05);
+  border: 0.5px solid rgba(240, 185, 11, 0.15);
+  border-radius: 12px;
+}
+
+.hp-guest-card__icon {
+  color: #f0b90b;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.hp-guest-card__heading {
+  font-size: 14px;
+  font-weight: 500;
+  color: #eaecef;
+  margin: 0 0 4px;
+}
+
+.hp-guest-card__sub {
+  font-size: 13px;
+  color: rgba(234, 236, 239, 0.45);
+  margin: 0;
+}
+
+.hp-accent-link {
+  color: #f0b90b;
+  text-decoration: none;
+  font-weight: 500;
+}
+.hp-accent-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Verify card ─────────────────────────────────────────── */
+.hp-verify-card {
+  background: #161a1e;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hp-verify-card__eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  color: #f0b90b;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hp-verify-card__heading {
+  font-size: 16px;
+  font-weight: 500;
+  color: #eaecef;
+  margin: 0;
+}
+
+.hp-verify-card__sub {
+  font-size: 13px;
+  color: rgba(234, 236, 239, 0.42);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.hp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  border: none;
+}
+
+.hp-btn--primary {
+  background: #f0b90b;
+  color: #0b0e11;
+}
+.hp-btn--primary:hover { background: #d4a50a; }
+.hp-btn--primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.hp-btn--outline {
+  background: transparent;
+  border: 0.5px solid rgba(240, 185, 11, 0.4);
+  color: #f0b90b;
+  align-self: flex-start;
+}
+.hp-btn--outline:hover { background: rgba(240, 185, 11, 0.07); }
+
+/* ── OTP form ────────────────────────────────────────────── */
+.hp-otp-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.hp-otp-input {
+  flex: 1;
+  max-width: 180px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #eaecef;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 0 12px;
+  outline: none;
+}
+.hp-otp-input:focus {
+  border-color: #f0b90b;
+}
+
+/* ── Alerts ──────────────────────────────────────────────── */
+.hp-alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.hp-alert--success {
+  background: rgba(14, 203, 129, 0.08);
+  border: 0.5px solid rgba(14, 203, 129, 0.25);
+  color: #0ecb81;
+}
+.hp-alert--error {
+  background: rgba(246, 70, 93, 0.1);
+  border: 0.5px solid rgba(246, 70, 93, 0.3);
+  color: #f6465d;
+}
+
+/* ── Stat bar ────────────────────────────────────────────── */
+.hp-stat-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.hp-stat {
+  background: #161a1e;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hp-stat__label {
+  font-size: 11px;
+  color: rgba(234, 236, 239, 0.42);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.hp-stat__value {
+  font-size: 18px;
+  font-weight: 500;
+  color: #eaecef;
+  letter-spacing: -0.2px;
+}
+
+.hp-stat__pct {
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+/* ── Charts ──────────────────────────────────────────────── */
+.hp-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.hp-chart-card {
+  background: #161a1e;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 20px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hp-chart-card__label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(234, 236, 239, 0.42);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Donut layout */
+.hp-donut-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hp-donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hp-donut-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.hp-donut-legend__swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.hp-donut-legend__name {
+  color: rgba(234, 236, 239, 0.65);
+  flex: 1;
+}
+
+.hp-donut-legend__pct {
+  color: rgba(234, 236, 239, 0.4);
+  font-size: 11px;
+}
+
+/* ── Holdings table ──────────────────────────────────────── */
+.hp-table-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+}
+
+.hp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: #eaecef;
+  white-space: nowrap;
+}
+
+.hp-table thead tr {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
+}
+
+.hp-table th {
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(234, 236, 239, 0.4);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.hp-table td {
+  padding: 13px 16px;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.04);
+}
+
+.hp-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.hp-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.hp-table__symbol {
+  font-weight: 500;
+  color: #eaecef;
+}
+
+.hp-table__pct {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .hp-root {
+    padding: 20px 16px 48px;
+    gap: 36px;
+  }
+
+  .hp-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .hp-stat-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hp-price-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .hp-stat-bar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-live-dot,
+  .hp-empty__spinner {
+    animation: none;
+  }
+}
