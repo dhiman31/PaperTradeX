@@ -179,9 +179,12 @@ const wss = new WebSocketServer({ server });
 function proxyWS(clientSocket, upstreamPath) {
 
   console.log('Creating upstream:', upstreamPath);
+  const wsBase = PRICE_URL
+    .replace('http://', 'ws://')
+    .replace('https://', 'wss://');
 
   const upstream = new WebSocket(
-    `ws://${PRICE_URL}${upstreamPath}`
+    `${wsBase}${upstreamPath}`
   );
 
   // ----------------------------
