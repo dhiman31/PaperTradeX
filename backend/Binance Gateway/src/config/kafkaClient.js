@@ -1,23 +1,8 @@
-const { Kafka } = require('kafkajs');
-const fs = require('fs');
-const path = require('path');
+const { Kafka } = require("kafkajs");
+const {KAFKA_BROKER_IP} = require('./config')
+const {KAFKA_CLIENT_ID} = require('./config')
 
 exports.kafka = new Kafka({
-  clientId: 'binance-gateway',
-  brokers: [
-    `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`
-  ],
-  ssl: {
-    ca: [
-      fs.readFileSync(
-        path.join(__dirname, '../certs/ca.pem'),
-        'utf8'
-      )
-    ]
-  },
-  sasl: {
-    mechanism: 'plain',
-    username: process.env.KAFKA_USERNAME,
-    password: process.env.KAFKA_PASSWORD
-  }
+  clientId: KAFKA_CLIENT_ID,
+  brokers: [KAFKA_BROKER_IP]
 });

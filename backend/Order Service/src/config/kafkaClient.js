@@ -1,25 +1,9 @@
 const { Kafka } = require('kafkajs');
-const fs = require('fs');
-const path = require('path');
+const { KAFKA_BROKER_IP } = require('./serverConfig');
 
 const kafka = new Kafka({
-  clientId: 'order-service',
-  brokers: [
-    `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`
-  ],
-  ssl: {
-    ca: [
-      fs.readFileSync(
-        path.join(__dirname, '../certs/ca.pem'),
-        'utf8'
-      )
-    ]
-  },
-  sasl: {
-    mechanism: 'plain',
-    username: process.env.KAFKA_USERNAME,
-    password: process.env.KAFKA_PASSWORD
-  }
+    clientId: 'order-service',
+    brokers: [KAFKA_BROKER_IP]
 });
 
 const producer = kafka.producer();

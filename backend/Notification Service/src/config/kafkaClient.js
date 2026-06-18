@@ -1,23 +1,7 @@
-const { Kafka } = require('kafkajs');
-const fs = require('fs');
-const path = require('path');
+const { Kafka } = require("kafkajs");
+const {KAFKA_BROKER_IP} = require('./serverConfig')
 
 exports.kafka = new Kafka({
-  clientId: 'notification-service',
-  brokers: [
-    `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`
-  ],
-  ssl: {
-    ca: [
-      fs.readFileSync(
-        path.join(__dirname, '../certs/ca.pem'),
-        'utf8'
-      )
-    ]
-  },
-  sasl: {
-    mechanism: 'plain',
-    username: process.env.KAFKA_USERNAME,
-    password: process.env.KAFKA_PASSWORD
-  }
+  clientId: "my-app",
+  brokers: [KAFKA_BROKER_IP]
 });
