@@ -1,7 +1,23 @@
-const { Kafka } = require("kafkajs");
-const {KAFKA_BROKER_IP} = require('./serverConfig')
+const { Kafka } = require('kafkajs');
+const fs = require('fs');
+const path = require('path');
 
 exports.kafka = new Kafka({
-  clientId: "ingestion-service",
-  brokers: [KAFKA_BROKER_IP]
+  clientId: 'ingestion-service',
+  brokers: [
+    `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`
+  ],
+  ssl: {
+    ca: [
+      fs.readFileSync(
+        path.join(__dirname, '../certs/ca.pem'),
+        'utf8'
+      )
+    ]
+  },
+  sasl: {
+    mechanism: 'plain',
+    username: process.env.KAFKA_USERNAME,
+    password: process.env.KAFKA_PASSWORD
+  }
 });
