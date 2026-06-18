@@ -1,9 +1,9 @@
-# Trading App — React + Vite
+# PaperTradeX — React + Vite
 
 ## Setup
 
 ```bash
-cp .env.example .env   # set your API + WS URLs
+cp .env   # set your API + WS URLs
 npm install
 npm run dev
 ```
