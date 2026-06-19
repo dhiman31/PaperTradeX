@@ -17,12 +17,12 @@ function TopCard({ title, rows }) {
     <div className="top-card">
       <div className="top-card__header">
         <span className="top-card__title">{title}</span>
-        <span className="top-card__more">
+        {/* <span className="top-card__more">
           More
           <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true">
             <path d="M2 1L6 4L2 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        </span>
+        </span> */}
       </div>
 
       <div className="top-card__rows">
