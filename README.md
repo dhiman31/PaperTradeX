@@ -134,7 +134,7 @@ PaperTradeX simulates a real-world trading platform where users can monitor live
 
 
 
-<img src="./screenshots/cryptoHLD.png" width="95%" alt="PaperTradeX HLD"/>
+<img src="./screenshots/paperTradeXHLD.png" width="95%" alt="PaperTradeX HLD"/>
 
 
 
